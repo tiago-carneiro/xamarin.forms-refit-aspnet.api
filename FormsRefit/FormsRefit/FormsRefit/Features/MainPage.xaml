@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FormsRefit.MainPage"
+             xmlns:behaviors="clr-namespace:FormsRefit;assembly=FormsRefit" 
+             NavigationPage.BackButtonTitle=""
+             Title="{Binding Title}">
+    <Grid VerticalOptions="FillAndExpand" 
+          HorizontalOptions="FillAndExpand" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout VerticalOptions="FillAndExpand" 
+                     HorizontalOptions="FillAndExpand" 
+                     Orientation="Vertical"
+                     Margin="15, 20, 15, 0"
+                     Grid.Row="0">
+
+            <Label  VerticalOptions="Center" 
+                HorizontalOptions="StartAndExpand" 
+                Text="Digite o nome" />
+
+            <Entry  VerticalOptions="Start" 
+                HorizontalOptions="Fill"
+                Text="{Binding CurrentItem.Name}"/>
+
+            <Label  VerticalOptions="Center" 
+                HorizontalOptions="StartAndExpand" 
+                Text="Digite o sobrenome" />
+
+            <Entry  VerticalOptions="Start" 
+                HorizontalOptions="Fill"
+                Text="{Binding CurrentItem.LastName}"/>
+
+            <StackLayout HorizontalOptions="EndAndExpand" 
+                         VerticalOptions="CenterAndExpand" Orientation="Horizontal">
+
+                <Button VerticalOptions="Center" 
+                        HorizontalOptions="StartAndExpand"
+                        HeightRequest="60"
+                        Text="Excluir"
+                        IsVisible="{Binding CanDelete}"
+                        Command="{Binding DeleteCommand}" />
+
+                <Button VerticalOptions="Center" 
+                        HorizontalOptions="StartAndExpand"
+                        HeightRequest="60"
+                        Text="Salvar"
+                        Command="{Binding SaveCommand}" />
+            </StackLayout>
+
+        </StackLayout>
+
+        <ListView VerticalOptions="StartAndExpand" 
+                  HorizontalOptions="FillAndExpand"    
+                  HasUnevenRows="true"
+                  IsPullToRefreshEnabled="false"
+                  Margin="0, 20, 0, 0"
+                  Grid.Row="1"
+                  ItemsSource="{Binding Items}"
+                  behaviors:AttachedItemTappedBehavior.Command="{Binding ItemClickCommand}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="50">
+                            <Label Margin="6, 0" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" FontSize="Medium" Text="{Binding FullName}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>
